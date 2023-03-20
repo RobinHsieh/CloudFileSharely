@@ -10,9 +10,8 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
 
     # Start to send email
     for row in range(row_size):
-        # person's mail
+        # Person's mail
         gmail = data.at[row, "電子郵件地址"]
-        print(row, gmail)
         # How many days need to send
         file_ids = []
         offset = -2
@@ -41,8 +40,9 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
                         offset += 2
                         up_color.update_cell_color(row + 1, column, 0, 1, 1, SPREADSHEET_ID, SHEET_NAME)  # blue
 
-        print(file_ids, offset)
         if offset != -2:
+            print(row, gmail)
+            print(file_ids, offset)
             for file_id in file_ids:
                 share_file.share_file(file_id, gmail, offset, max_date)
 

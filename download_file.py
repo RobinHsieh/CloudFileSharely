@@ -11,7 +11,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 def update_file(file_name, sheet_id):
 
     # Authenticate with the Google Drive API using the credentials
-    creds = Credentials.from_authorized_user_file('/Users/robinhsieh/Programming/Python/googleAPI/token.json', SCOPES)
+    creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
     drive_service = build('drive', 'v3', credentials=creds)
 
     # Get the file size of the Google Sheet in bytes
