@@ -1,0 +1,7 @@
+.DS_Store
+credentials.json
+token.json
+data
+files_information.py
+logfile.log
+main_previous.py
