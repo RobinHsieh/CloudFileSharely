@@ -21,10 +21,9 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
             if date == today_str:
                 if file_ids_dic.get(column):
 
-                    # print("row: ", row, "col: ", column)  # test
                     red, green, blue = up_color.get_cell_color(row + 1, column, SPREADSHEET_ID)
 
-                    if (red, green, blue) == (1, 1, 1):  # if cell's color is white
+                    if (red, green, blue) == (1, 1, 1) or (red, green, blue) == (0, 0, 0):  # if cell's color is white
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
                         up_color.update_cell_color(row + 1, column, 1, 1, 0, SPREADSHEET_ID, SHEET_NAME)  # yellow

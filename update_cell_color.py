@@ -87,7 +87,7 @@ def get_cell_color(row, col, SPREADSHEET_ID):
     request = sheets_service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, ranges=RANGE_NAME,
                                                 fields='sheets(data(rowData(values(userEnteredFormat(backgroundColor)))))')
     result = request.execute()
-    print(result)
+
     sheet_data = result['sheets'][0]['data'][0]['rowData'][row]['values'][col]
     print("row: ", row, "col: ", col)
     print(sheet_data)
@@ -98,24 +98,3 @@ def get_cell_color(row, col, SPREADSHEET_ID):
     blue = color.get('blue', 0)
 
     return red, green, blue
-
-
-# def main():
-#     values = get_values_from_sheet()
-#
-#     for row_idx, row in enumerate(values):
-#         for col_idx, cell in enumerate(row):
-#             if cell == today:
-#                 red, green, blue = get_cell_color(row_idx, col_idx)
-#
-#                 # 根据颜色更改单元格的顏色：
-#                 if (red, green, blue) == (1, 1, 1):  # 白色
-#                     update_cell_color(row_idx, col_idx, 1, 1, 0)  # 更改為黃色
-#                 elif (red, green, blue) == (1, 1, 0):  # 黃色
-#                     update_cell_color(row_idx, col_idx, 0, 1, 0)  # 更改為綠色
-#                 elif (red, green, blue) == (0, 1, 0):  # 綠色
-#                     update_cell_color(row_idx, col_idx, 0, 1, 1)  # 更改為淺藍色
-#
-#
-# if __name__ == '__main__':
-#     main()

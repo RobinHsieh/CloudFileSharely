@@ -52,3 +52,6 @@ def search_file(searched_date):
         files = None
 
     return files
+
+
+search_file("03/20")
