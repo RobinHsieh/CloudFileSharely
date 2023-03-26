@@ -1,43 +1,38 @@
-import math
+import csv
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
 import files_information as f_i
 
-
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def update_file(file_name, sheet_id):
+def update_file(file_name, spreadsheet_id, sheet_name):
 
-    # Authenticate with the Google Drive API using the credentials
+    # Authenticate with the Google Sheets API using the credentials
     creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
-    drive_service = build('drive', 'v3', credentials=creds)
+    sheets_service = build('sheets', 'v4', credentials=creds)
 
-    # Get the file size of the Google Sheet in bytes
-    file = drive_service.files().get(fileId=sheet_id,
-                                     fields='id, name, mimeType, createdTime, modifiedTime, parents, size').execute()
-    file_size = int(file['size'])
+    # Get the sheet ID of the specified sheet name
+    sheets_metadata = sheets_service.spreadsheets().get(spreadsheetId=spreadsheet_id, ranges=[], includeGridData=False).execute()
+    sheets = sheets_metadata['sheets']
 
-    # Set the maximum number of bytes to download in each request
-    chunk_size = 1024 * 1024  # 1 MB
+    sheet_id = None
+    for sheet in sheets:
+        if sheet['properties']['title'] == sheet_name:
+            sheet_id = sheet['properties']['sheetId']
+            break
 
-    # Set the number of chunks to download
-    num_chunks = math.ceil(file_size / chunk_size)
+    if sheet_id is None:
+        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(sheet_name))
 
-    # Export the Google Sheet as a .csv file
+    # Get the data from the specified sheet
+    range_name = sheet_name
+    result = sheets_service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+    rows = result.get('values', [])
+
+    # Write the data to a CSV file
     file_path = f_i.project_path + "/data/"
-    mime_type = 'text/csv'
-    request = drive_service.files().export_media(fileId=sheet_id, mimeType=mime_type)
-
-    # Download the Google Sheet in chunks
-    with open(file_path + file_name, 'wb') as outfile:
-        for i in range(num_chunks):
-            start = i * chunk_size
-            end = start + chunk_size - 1
-            if end > file_size:
-                end = file_size - 1
-            range_header = 'bytes={}-{}'.format(start, end)
-            request.headers['Range'] = range_header
-            chunk = request.execute()
-            outfile.write(chunk)
+    with open(file_path + file_name, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(rows)

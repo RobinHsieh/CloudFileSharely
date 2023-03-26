@@ -82,6 +82,39 @@ def update_cell_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
         print(f"An error occurred: {error}")
 
 
+# 更新Google Sheet單元格顏色
+def update_cells_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
+    sheet_id = get_sheet_id(SHEET_NAME, SPREADSHEET_ID)
+
+    # Prepare a list of cell values with the desired background color
+    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 100
+
+    # Create a list of rows, each containing one cell value
+    rows = [{"values": cell_value} for cell_value in cell_values]
+
+    body = {
+        "requests": [
+            {
+                "updateCells": {
+                    "rows": rows,
+                    "fields": "userEnteredFormat.backgroundColor",
+                    "range": {
+                        "sheetId": sheet_id,
+                        "startRowIndex": row,
+                        "endRowIndex": row + 100,
+                        "startColumnIndex": col,
+                        "endColumnIndex": col + 1
+                    }
+                }
+            }
+        ]
+    }
+    try:
+        sheets_service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+
+
 # 讀取單元格顏色
 def get_cell_color(row, col, SPREADSHEET_ID):
     request = sheets_service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, ranges=RANGE_NAME,
