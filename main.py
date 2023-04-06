@@ -6,7 +6,8 @@ import update_cell_color as up_color
 import files_information as f_i
 
 
-print("Start----------------------------------------------------------------------------------------------------")
+print("Start----------------------------------------------------------------------------------------------------",
+      handle_csv.today_str)
 # Update csv files
 for index, sheet_name in enumerate(f_i.spreadsheet_id_dic):
     download_file.update_file(sheet_name, f_i.spreadsheet_id_dic.get(sheet_name), f_i.SHEET_NAME_list[index])
@@ -40,4 +41,5 @@ print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<|")
 handle_csv.send_mail(data_L13, f_i.L13_video_id_dic, f_i.L13_SPREADSHEET_ID, f_i.SHEET_NAME_list[4])
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<|")
 handle_csv.send_mail(data_L14, f_i.L14_video_id_dic, f_i.L14_SPREADSHEET_ID, f_i.SHEET_NAME_list[5])
-print("~End~====================================================================================================")
+print("~End~====================================================================================================",
+      handle_csv.today_str)

@@ -8,8 +8,6 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
     row_size = data.shape[0]
     column_size = data.shape[1]
 
-    # print(data)
-    # print(data["電子郵件地址"])
     # Start to send email
     for row in range(row_size):
         # Person's mail
