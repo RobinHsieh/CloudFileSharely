@@ -2,6 +2,6 @@
 credentials.json
 token.json
 data
-files_information.py
+Sharely/files_information.py
 logfile.log
 main_previous.py

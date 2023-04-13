@@ -1,9 +1,9 @@
+from Sharely import download_file, handle_csv
 import pandas
-import handle_csv
-import download_file
-import update_cell_color as up_color
+import Sharely.update_cell_color as up_color
 # Files information
-import files_information as f_i
+# import files_information as f_i
+import Sharely.files_information as f_i
 
 
 print("Start----------------------------------------------------------------------------------------------------",

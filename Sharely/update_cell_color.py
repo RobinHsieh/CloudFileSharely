@@ -2,7 +2,9 @@ import datetime
 from google.oauth2.credentials import Credentials
 from googleapiclient import discovery
 from googleapiclient.errors import HttpError
-import files_information as f_i
+from Sharely import files_information as f_i
+
+# import Sharely.files_information as f_i
 
 
 # 設置API憑證
