@@ -10,7 +10,7 @@ PROJECT_ROOT
 │   ├── share_file.py           # 
 │   ├── update_cell_color.py    # 
 │   └── handle_csv.py           # 
-├── log                         # STD output and Error output stream
+├── log                         # STD output or Error output stream
 └── venv                        # pip vertial env
 ```
 

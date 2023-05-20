@@ -4,17 +4,12 @@ from googleapiclient import discovery
 from googleapiclient.errors import HttpError
 from Sharely import files_information as f_i
 
-# import Sharely.files_information as f_i
-
 
 # 設置API憑證
 SERVICE_ACCOUNT_FILE = f_i.project_path + '/token.json'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Google Sheet信息
-# SPREADSHEET_ID = '1aTQe9czrAv0a7CyenfGTp7rlYLk_wx4dh05b_fsxZbE'  # L13
-# SPREADSHEET_ID = '1F9HWppdZwxZ19S8gVIJVdLDJS87tFq9tnGi7R9-XApQ'  # L10
-# SHEET_NAME = 'L10課後雲端'
 RANGE_NAME = 'A1:Z100'  # 例如：'Sheet1'
 
 # 建立憑證
@@ -27,12 +22,7 @@ sheets_service = discovery.build('sheets', 'v4', credentials=credentials)
 today = datetime.datetime.now().strftime('%-m/%-d')
 
 
-# 讀取Google Sheet
-# def get_values_from_sheet():
-#     result = sheets_service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-#     return result.get('values', [])
-
-
+# 獲取內部的Sheet ID
 def get_sheet_id(sheet_name, SPREADSHEET_ID):
     sheets_metadata = sheets_service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, fields='sheets(properties)').execute()
     sheets = sheets_metadata.get('sheets', '')
@@ -84,7 +74,7 @@ def update_cell_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
         print(f"An error occurred: {error}")
 
 
-# 更新Google Sheet單元格顏色
+# 更新Google Sheet單元格顏色(update boundary color)
 def update_cells_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
     sheet_id = get_sheet_id(SHEET_NAME, SPREADSHEET_ID)
 

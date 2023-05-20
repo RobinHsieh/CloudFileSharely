@@ -1,6 +1,6 @@
 from datetime import datetime
-import update_cell_color as up_color
-import share_file
+from Sharely import update_cell_color as up_color
+from Sharely import share_file
 
 
 def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
