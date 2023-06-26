@@ -7,7 +7,7 @@ from Sharely import files_information as f_i
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def update_file(file_name, spreadsheet_id, sheet_name):
+def update_file(spreadsheet_name, spreadsheet_id, singleSheet_name):
 
     # Authenticate with the Google Sheets API using the credentials
     creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
@@ -19,20 +19,20 @@ def update_file(file_name, spreadsheet_id, sheet_name):
 
     sheet_id = None
     for sheet in sheets:
-        if sheet['properties']['title'] == sheet_name:
+        if sheet['properties']['title'] == singleSheet_name:
             sheet_id = sheet['properties']['sheetId']
             break
 
     if sheet_id is None:
-        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(sheet_name))
+        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(singleSheet_name))
 
     # Get the data from the specified sheet
-    range_name = sheet_name
+    range_name = singleSheet_name
     result = sheets_service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
     rows = result.get('values', [])
 
     # Write the data to a CSV file
     file_path = f_i.project_path + "/data/"
-    with open(file_path + file_name, 'w', newline='', encoding='utf-8') as csvfile:
+    with open(file_path + spreadsheet_name, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(rows)
