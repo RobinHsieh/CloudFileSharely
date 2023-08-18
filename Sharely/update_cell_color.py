@@ -10,7 +10,7 @@ SERVICE_ACCOUNT_FILE = f_i.project_path + '/token.json'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Google Sheet信息
-RANGE_NAME = 'A1:Z100'  # 例如：'Sheet1'
+RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
 
 # 建立憑證
 credentials = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
@@ -93,7 +93,7 @@ def update_cells_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
                     "range": {
                         "sheetId": sheet_id,
                         "startRowIndex": row,
-                        "endRowIndex": row + 100,
+                        "endRowIndex": row + 150,
                         "startColumnIndex": col,
                         "endColumnIndex": col + 1
                     }
