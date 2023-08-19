@@ -26,5 +26,5 @@ jobs:
           mkdir data
       - name: Excecute list_filename.py
         run: |
-          ./venv/bin/python3 .test/list_filename.py 
+          ./venv/bin/python3 ./test/list_filename.py 
       - run: echo "🍏 This job's status is ${{ job.status }}."
