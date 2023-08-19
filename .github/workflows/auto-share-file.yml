@@ -1,7 +1,7 @@
 name: Auto Share File in Google Drive
 run-name: ${{ github.actor }} is sharing file by using crontab 🚀
-on: 
-  #  push
+on:
+  push
 
 jobs:
   Start-Daily-Actions:
@@ -25,13 +25,10 @@ jobs:
 
       - name: Decode credentials.json
         run: |
-          echo "${{ secrets.CREDENTIALS_JSON }}" | base64 -d > credentials.json
+          echo "${{ secrets.CREDENTIALS_JSON }}" | base64 -d > ./Service_account_credentials/credentials.json
       - name: Decode files_information.py
         run: |
           echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
-      - name: Create data file
-        run: |
-          mkdir data
 
       - name: Excecute list_filename.py
         run: |
