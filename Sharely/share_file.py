@@ -25,7 +25,7 @@ def share_file(real_file_id, real_user, offset, max_date):
     for guides on implementing OAuth2 for the application.
     """
     # creds, _ = google.auth.default()
-    creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
+    creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials/token.json', SCOPES)
 
     try:
         # create drive api client
