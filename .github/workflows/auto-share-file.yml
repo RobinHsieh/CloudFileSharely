@@ -23,19 +23,18 @@ jobs:
           cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
 
-      - name: Decode token.json
+      - name: Decode credentials.json
         run: |
-          echo "${{ secrets.TOKEN_JSON }}" | base64 -d > token.json
+          echo "${{ secrets.CREDENTIALS_JSON }}" | base64 -d > credentials.json
       - name: Decode files_information.py
         run: |
           echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
       - name: Create data file
         run: |
           mkdir data
-          ls
 
-          #      - name: Excecute list_filename.py
-          #        run: |
-          #          python3 ./test/list_filename.py 
+      - name: Excecute list_filename.py
+        run: |
+          python3 ./test/list_filename.py 
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
