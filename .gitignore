@@ -1,10 +1,10 @@
 .DS_Store
+Sharely/files_information.py
 OAuth_client_ID_credentials/*
 !OAuth_client_ID_credentials/.gitkeep
 Service_account_credentials/*
 !Service_account_credentials/.gitkeep
 data/*
 !data/.gitkeep
-Sharely/files_information.py
-logfile.log
-logfile230325_230624.log
+log/*
+!log/.gitkeep
