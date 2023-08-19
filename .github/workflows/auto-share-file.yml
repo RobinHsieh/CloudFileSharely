@@ -32,9 +32,10 @@ jobs:
       - name: Create data file
         run: |
           mkdir data
+          ls
 
-      - name: Excecute list_filename.py
-        run: |
-          python3 ./test/list_filename.py 
+          #      - name: Excecute list_filename.py
+          #        run: |
+          #          python3 ./test/list_filename.py 
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
