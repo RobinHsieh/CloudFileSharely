@@ -17,13 +17,11 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
 
       - name: Set up Python virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.7'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
 
       - name: Decode token.json
         run: |
