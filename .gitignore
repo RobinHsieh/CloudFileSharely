@@ -1,6 +1,8 @@
 .DS_Store
-credentials.json
-token.json
+OAuth_client_ID_credentials/credentials.json
+OAuth_client_ID_credentials/token.json
+Service_account_credentials/credentials.json
+Service_account_credentials/token.json
 data
 Sharely/files_information.py
 logfile.log
