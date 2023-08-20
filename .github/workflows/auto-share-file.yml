@@ -21,6 +21,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+          access_token_scopes: https://www.googleapis.com/auth/drive
 
       - name: Set up Python virtual environment
         uses: actions/setup-python@v4
@@ -29,12 +30,12 @@ jobs:
           cache: 'pip' # caching pip dependencies
       - run: pip install -r requirements.txt
 
-      - name: Decode credentials.json
-        run: |
-          echo "${{ secrets.CREDENTIALS_JSON }}" ./Service_account_credentials/credentials.json
-      - name: Decode files_information.py
-        run: |
-          echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
+#      - name: Decode credentials.json
+#        run: |
+#          echo "${{ secrets.CREDENTIALS_JSON }}" ./Service_account_credentials/credentials.json
+#      - name: Decode files_information.py
+#        run: |
+#          echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
 
       - name: Excecute list_filename.py
         run: |
