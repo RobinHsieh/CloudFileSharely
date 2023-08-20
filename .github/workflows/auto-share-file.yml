@@ -30,6 +30,12 @@ jobs:
         run: |
           echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
 
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+        credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+
       - name: Excecute list_filename.py
         run: |
           python3 ./test/list_filename.py 
