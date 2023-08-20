@@ -25,7 +25,7 @@ jobs:
 
       - name: Decode credentials.json
         run: |
-          echo "${{ secrets.CREDENTIALS_JSON }}" | base64 -d > ./Service_account_credentials/credentials.json
+          echo "${{ secrets.CREDENTIALS_JSON }}" ./Service_account_credentials/credentials.json
       - name: Decode files_information.py
         run: |
           echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
