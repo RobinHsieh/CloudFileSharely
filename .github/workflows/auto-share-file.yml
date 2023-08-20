@@ -16,6 +16,12 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
 
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+
       - name: Set up Python virtual environment
         uses: actions/setup-python@v4
         with:
@@ -29,12 +35,6 @@ jobs:
       - name: Decode files_information.py
         run: |
           echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
-
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
 
       - name: Excecute list_filename.py
         run: |
