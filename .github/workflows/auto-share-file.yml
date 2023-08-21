@@ -1,7 +1,8 @@
 name: Auto Share File in Google Drive
 run-name: ${{ github.actor }} is sharing file by using crontab 🚀
 on:
-  push
+  schedule:
+    - cron: '2 14 * * *'
 
 jobs:
   Start-Daily-Actions:
