@@ -7,7 +7,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive']
+scopes = ['https://www.googleapis.com/auth/drive']
 
 
 def main():
@@ -22,7 +22,7 @@ def main():
     # )
     creds = Credentials.from_service_account_file(
         filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
-        scopes=SCOPES,
+        scopes=scopes,
     )
 
     try:

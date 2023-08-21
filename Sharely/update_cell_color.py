@@ -1,30 +1,30 @@
 import datetime
 from google.oauth2.credentials import Credentials
-from googleapiclient import discovery
+from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from Sharely import files_information as f_i
 
 
-# 設置API憑證
-SERVICE_ACCOUNT_FILE = f_i.project_path + '/token.json'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Google Sheet信息
 RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
 
 # 建立憑證
-credentials = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
+creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
 
 # 建立Google Sheets API客戶端
-sheets_service = discovery.build('sheets', 'v4', credentials=credentials)
+sheets_service = build('sheets', 'v4', credentials=creds)
 
 # 獲取今日日期
 today = datetime.datetime.now().strftime('%-m/%-d')
 
 
 # 獲取內部的Sheet ID
-def get_sheet_id(sheet_name, SPREADSHEET_ID):
-    sheets_metadata = sheets_service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, fields='sheets(properties)').execute()
+def get_sheet_id(sheet_name, spreadsheet_id):
+    sheets_metadata = sheets_service.spreadsheets().get(
+        spreadsheetId=spreadsheet_id, fields='sheets(properties)'
+    ).execute()
     sheets = sheets_metadata.get('sheets', '')
     sheet_id = None
     for sheet in sheets:
@@ -35,8 +35,8 @@ def get_sheet_id(sheet_name, SPREADSHEET_ID):
 
 
 # 更新Google Sheet單元格顏色
-def update_cell_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
-    sheet_id = get_sheet_id(SHEET_NAME, SPREADSHEET_ID)
+def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+    sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
     body = {
         "requests": [
             {
@@ -69,17 +69,17 @@ def update_cell_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
         ]
     }
     try:
-        sheets_service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
+        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")
 
 
 # 更新Google Sheet單元格顏色(update boundary color)
-def update_cells_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
-    sheet_id = get_sheet_id(SHEET_NAME, SPREADSHEET_ID)
+def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+    sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color
-    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 100
+    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
 
     # Create a list of rows, each containing one cell value
     rows = [{"values": cell_value} for cell_value in cell_values]
@@ -102,15 +102,19 @@ def update_cells_color(row, col, red, green, blue, SPREADSHEET_ID, SHEET_NAME):
         ]
     }
     try:
-        sheets_service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
+        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")
 
 
 # 讀取單元格顏色
-def get_cell_color(row, col, SPREADSHEET_ID):
-    request = sheets_service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, ranges=RANGE_NAME,
-                                                fields='sheets(data(rowData(values(userEnteredFormat(backgroundColor)))))')
+def get_cell_color(row, col, spreadsheet_id):
+
+    request = sheets_service.spreadsheets().get(
+        spreadsheetId=spreadsheet_id, ranges=RANGE_NAME,
+        fields='sheets(data(rowData(values(userEnteredFormat(backgroundColor)))))'
+    )
+
     result = request.execute()
 
     sheet_data = result['sheets'][0]['data'][0]['rowData'][row]['values'][col]
