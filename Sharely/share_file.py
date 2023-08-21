@@ -52,9 +52,13 @@ def share_file(real_file_id, real_user, offset, max_date):
         expire_date_utc8 = current_date_utc8 + timedelta(days=1 + offset)
 
         batch = service.new_batch_http_request(callback=callback)
+        # user_permission = {'type': 'user',
+        #                    'role': 'reader',
+        #                    "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
+        #                    'emailAddress': real_user
+        #                    }
         user_permission = {'type': 'user',
                            'role': 'reader',
-                           "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
                            'emailAddress': real_user
                            }
 
