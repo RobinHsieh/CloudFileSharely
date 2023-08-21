@@ -37,7 +37,7 @@ jobs:
 #        run: |
 #          echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
 
-      - name: Excecute list_filename.py
+      - name: Execute list_filename.py
         run: |
           python3 ./test/list_filename.py 
 
