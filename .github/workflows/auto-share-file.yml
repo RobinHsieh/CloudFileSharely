@@ -2,7 +2,7 @@ name: Auto Share File in Google Drive
 run-name: ${{ github.actor }} is sharing file by using crontab 🚀
 on:
   schedule:
-    - cron: '18 14 * * *'
+    - cron: '49 14 * * *'
 
 jobs:
   Start-Daily-Actions:
@@ -14,8 +14,6 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
-          ref: CICD_test
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
 
