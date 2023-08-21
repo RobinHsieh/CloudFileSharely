@@ -32,7 +32,7 @@ jobs:
 
       - name: Get files_information.py
         run: |
-          echo "${{ secrets.FILES_INFORMATION_PY }}" > ./Sharely/files_information.py
+          echo '${{ secrets.FILES_INFORMATION_PY }}' > ./Sharely/files_information.py
 
       - name: Execute main.py
         run: |
