@@ -3,7 +3,13 @@ from Sharely import update_cell_color as up_color
 from Sharely import share_file
 
 
-def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
+def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):
+
+    # Get time
+    this_month = datetime.now().month
+    today = datetime.now().day
+    today_str = str(this_month) + "/" + str(today)
+
     # Processing required information
     row_size = data.shape[0]
     column_size = data.shape[1]
@@ -21,23 +27,23 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
             if date == today_str:
                 if file_ids_dic.get(column):
 
-                    red, green, blue = up_color.get_cell_color(row + 1, column, SPREADSHEET_ID)
+                    red, green, blue = up_color.get_cell_color(row + 1, column, spreadsheet_id)
 
                     if (red, green, blue) == (1, 1, 1) or (red, green, blue) == (0, 0, 0):  # if cell's color is white
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 1, 1, 0, SPREADSHEET_ID, SHEET_NAME)  # yellow
+                        up_color.update_cell_color(row + 1, column, 1, 1, 0, spreadsheet_id, sheet_name)  # yellow
 
                     elif (red, green, blue) == (1, 1, 0):  # if cell's color is yellow
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 0, 1, 0, SPREADSHEET_ID, SHEET_NAME)  # green
+                        up_color.update_cell_color(row + 1, column, 0, 1, 0, spreadsheet_id, sheet_name)  # green
 
                     elif (red, green, blue) == (0, 1, 0):  # if cell's color is green
                         max_date = max_date + data.columns[column] + " "
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 0, 1, 1, SPREADSHEET_ID, SHEET_NAME)  # blue
+                        up_color.update_cell_color(row + 1, column, 0, 1, 1, spreadsheet_id, sheet_name)  # blue
 
         if offset != -2:
             print(row, gmail)
@@ -45,9 +51,3 @@ def send_mail(data, file_ids_dic, SPREADSHEET_ID, SHEET_NAME):
             for file_id in file_ids:
                 share_file.share_file(file_id, gmail, offset, max_date)
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-
-# Get time
-this_month = datetime.now().month
-today = datetime.now().day
-today_str = str(this_month) + "/" + str(today)
