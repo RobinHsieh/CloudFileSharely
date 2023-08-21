@@ -57,7 +57,7 @@ def share_file(real_file_id, real_user, offset, max_date):
                            'emailAddress': real_user
                            }
 
-        email_message = f"觀看時間至{expire_date.month}月{expire_date.day}日 23:59\n\n【智慧財產權】\
+        email_message = f"觀看時間至{expire_date.month}月{expire_date.day}日 23:59 UTC+8\n\n【智慧財產權】\
         \n請本人在觀看雲端影片時，嚴禁下載、翻錄雲端影片內容，或是提供給第三人做使用。\n\n【貼心提醒】\n若覺得不清楚的話，\
         建議改用筆電或電腦(螢幕較大之設備)觀看，並且把畫質調成1080p(點選「設置」→「畫質」→「1080p」，若無自動調整請重複操作一次)，會比較清楚。\
         \n\n【問題排除】\n如遇播放影片時發生問題，請改用「無痕模式」(或「私密瀏覽」...等)試試看，如仍無法觀看請與助教聯繫。"
