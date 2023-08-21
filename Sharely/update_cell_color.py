@@ -1,27 +1,24 @@
-import datetime
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from Sharely import files_information as f_i
-
-
-SCOPES = ['https://www.googleapis.com/auth/drive']
-
-# Google Sheet信息
-RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
-
-# 建立憑證
-creds = Credentials.from_authorized_user_file(f_i.project_path + '/token.json', SCOPES)
-
-# 建立Google Sheets API客戶端
-sheets_service = build('sheets', 'v4', credentials=creds)
-
-# 獲取今日日期
-today = datetime.datetime.now().strftime('%-m/%-d')
+import os.path
 
 
 # 獲取內部的Sheet ID
 def get_sheet_id(sheet_name, spreadsheet_id):
+
+    # the requested scopes of access
+    scopes = ['https://www.googleapis.com/auth/drive']
+
+    # Authenticate with the Google Sheets API using the credentials
+    creds = Credentials.from_service_account_file(
+        filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+        scopes=scopes,
+    )
+
+    # 建立Google Sheets API客戶端
+    sheets_service = build('sheets', 'v4', credentials=creds)
+
     sheets_metadata = sheets_service.spreadsheets().get(
         spreadsheetId=spreadsheet_id, fields='sheets(properties)'
     ).execute()
@@ -36,6 +33,19 @@ def get_sheet_id(sheet_name, spreadsheet_id):
 
 # 更新Google Sheet單元格顏色
 def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+
+    # the requested scopes of access
+    scopes = ['https://www.googleapis.com/auth/drive']
+
+    # Authenticate with the Google Sheets API using the credentials
+    creds = Credentials.from_service_account_file(
+        filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+        scopes=scopes,
+    )
+
+    # 建立Google Sheets API客戶端
+    sheets_service = build('sheets', 'v4', credentials=creds)
+
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
     body = {
         "requests": [
@@ -76,6 +86,19 @@ def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
 
 # 更新Google Sheet單元格顏色(update boundary color)
 def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+
+    # the requested scopes of access
+    scopes = ['https://www.googleapis.com/auth/drive']
+
+    # Authenticate with the Google Sheets API using the credentials
+    creds = Credentials.from_service_account_file(
+        filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+        scopes=scopes,
+    )
+
+    # 建立Google Sheets API客戶端
+    sheets_service = build('sheets', 'v4', credentials=creds)
+
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color
@@ -110,8 +133,23 @@ def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
 # 讀取單元格顏色
 def get_cell_color(row, col, spreadsheet_id):
 
+    # the requested scopes of access
+    scopes = ['https://www.googleapis.com/auth/drive']
+
+    # Authenticate with the Google Sheets API using the credentials
+    creds = Credentials.from_service_account_file(
+        filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+        scopes=scopes,
+    )
+
+    # 建立Google Sheets API客戶端
+    sheets_service = build('sheets', 'v4', credentials=creds)
+
+    # Google Sheet信息
+    range_name = 'A1:Z150'  # 例如：'Sheet1'
+
     request = sheets_service.spreadsheets().get(
-        spreadsheetId=spreadsheet_id, ranges=RANGE_NAME,
+        spreadsheetId=spreadsheet_id, ranges=range_name,
         fields='sheets(data(rowData(values(userEnteredFormat(backgroundColor)))))'
     )
 

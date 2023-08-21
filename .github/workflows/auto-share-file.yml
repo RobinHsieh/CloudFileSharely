@@ -30,12 +30,12 @@ jobs:
           credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
           access_token_scopes: https://www.googleapis.com/auth/drive
 
-#      - name: Decode files_information.py
-#        run: |
-#          echo "${{ secrets.FILES_INFORMATION_PY }}" | base64 -d > ./Sharely/files_information.py
-
-      - name: Execute list_filename.py
+      - name: Get files_information.py
         run: |
-          python3 ./test/list_filename.py 
+          echo "${{ secrets.FILES_INFORMATION_PY }}" > ./Sharely/files_information.py
+
+      - name: Execute main.py
+        run: |
+          python3 ./main.py
 
       - run: echo "🍏 This job's status is ${{ job.status }}."

@@ -16,10 +16,6 @@ def main():
     """
 
     # 使用服務帳戶憑證
-    # creds = Credentials.from_service_account_file(
-    #     filename=os.path.join(os.environ['GITHUB_WORKSPACE'], 'Service_account_credentials', 'credentials.json'),
-    #     scopes=SCOPES
-    # )
     creds = Credentials.from_service_account_file(
         filename=os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
         scopes=scopes,

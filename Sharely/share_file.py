@@ -1,13 +1,9 @@
 from __future__ import print_function
-
 import os.path
-
 from datetime import date, timedelta
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
-import Sharely.files_information as f_i
 
 
 def share_file(real_file_id, real_user, offset, max_date):
