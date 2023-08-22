@@ -7,27 +7,30 @@ from Sharely import files_information as f_i
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def update_file(spreadsheet_name, spreadsheet_id, singleSheet_name):
+def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
     # Authenticate with the Google Sheets API using the credentials
     creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials/token.json', SCOPES)
     sheets_service = build('sheets', 'v4', credentials=creds)
 
     # Get the sheet ID of the specified sheet name
-    sheets_metadata = sheets_service.spreadsheets().get(spreadsheetId=spreadsheet_id, ranges=[], includeGridData=False).execute()
+    sheets_metadata = sheets_service\
+        .spreadsheets()\
+        .get(spreadsheetId=spreadsheet_id, ranges=[], includeGridData=False)\
+        .execute()
     sheets = sheets_metadata['sheets']
 
     sheet_id = None
     for sheet in sheets:
-        if sheet['properties']['title'] == singleSheet_name:
+        if sheet['properties']['title'] == single_sheet_name:
             sheet_id = sheet['properties']['sheetId']
             break
 
     if sheet_id is None:
-        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(singleSheet_name))
+        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(single_sheet_name))
 
     # Get the data from the specified sheet
-    range_name = singleSheet_name
+    range_name = single_sheet_name
     result = sheets_service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
     rows = result.get('values', [])
 

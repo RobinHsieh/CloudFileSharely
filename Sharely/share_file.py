@@ -48,9 +48,8 @@ def share_file(real_file_id, real_user, offset, max_date):
         if offset == -2:
             offset = 0
         expire_date = f"{date.today()+timedelta(days=1 + offset)}T23:59:59+08:00:00"
-        # print(expire_date)  # test
-        # print(datetime.now().isoformat())  # test
 
+        # Availability
         batch = service.new_batch_http_request(callback=callback)
         user_permission = {'type': 'user',
                            'role': 'reader',
