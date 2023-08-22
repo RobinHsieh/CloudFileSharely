@@ -49,8 +49,10 @@ def share_file(real_file_id, real_user, offset, max_date):
             offset = 0
         expire_date = f"{date.today()+timedelta(days=1 + offset)}T23:59:59+08:00:00"
 
-        # Availability
         batch = service.new_batch_http_request(callback=callback)
+
+        # See availability about setting an expiration date for file access in:
+        # https://workspaceupdates.googleblog.com/2022/10/expiring-access-controls-google-drive.html
         user_permission = {'type': 'user',
                            'role': 'reader',
                            "expirationTime": expire_date,
