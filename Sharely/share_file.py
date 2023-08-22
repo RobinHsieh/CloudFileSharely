@@ -57,6 +57,9 @@ def share_file(real_file_id, real_user, offset, max_date):
         #                    "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
         #                    'emailAddress': real_user
         #                    }
+
+        # See availability about setting an expiration date for file access in:
+        # https://workspaceupdates.googleblog.com/2022/10/expiring-access-controls-google-drive.html
         user_permission = {'type': 'user',
                            'role': 'reader',
                            'emailAddress': real_user
