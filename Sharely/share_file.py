@@ -76,10 +76,11 @@ def share_file(real_file_id, real_user, offset, max_date):
         email_message += "\n\n助教聯絡方式：\nEmail: hectopascal.citrus@g.ncu.edu.tw\
         \nFB: https://www.facebook.com/people/Robin-Hsieh/100004677013672/"
 
+        # You can see method details in:
+        # https://developers.google.com/resources/api-libraries/documentation/drive/v3/python/latest/drive_v3.permissions.html
         batch.add(service.permissions().create(fileId=file_id,
                                                emailMessage=email_message,
                                                body=user_permission,
-                                               expirationTime=f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
                                                fields='id',))
 
         batch.execute()
