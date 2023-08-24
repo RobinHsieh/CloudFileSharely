@@ -82,14 +82,13 @@ def share_file(real_file_id, real_user, offset, max_date):
 
         # See method details in:
         # https://developers.google.com/resources/api-libraries/documentation/drive/v3/python/latest/drive_v3.permissions.html
-        # batch.add(service.permissions().create(fileId=file_id,
-        #                                        emailMessage=email_message,
-        #                                        body=user_permission,
-        #                                        fields='id',))
-        #
-        # batch.execute()
-        #
-        #
+        batch.add(service.permissions().create(fileId=file_id,
+                                               emailMessage=email_message,
+                                               body=user_permission,
+                                               fields='id',))
+
+        batch.execute()
+
         # batch = service.new_batch_http_request(callback=callback)
 
         user_permission = {'type': 'user',
