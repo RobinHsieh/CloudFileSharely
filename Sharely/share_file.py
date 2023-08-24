@@ -90,18 +90,17 @@ def share_file(real_file_id, real_user, offset, max_date):
         batch.execute()
 
         # batch = service.new_batch_http_request(callback=callback)
-
-        user_permission = {'type': 'user',
-                           'role': 'reader',
-                           "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
-                           'emailAddress': real_user
-                           }
-
-        batch.add(service.permissions().update(fileId=file_id,
-                                               permissionId=ids[-1],
-                                               body=user_permission,))
-
-        batch.execute()
+        # user_permission = {'type': 'user',
+        #                    'role': 'reader',
+        #                    "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
+        #                    'emailAddress': real_user
+        #                    }
+        #
+        # batch.add(service.permissions().update(fileId=file_id,
+        #                                        permissionId=ids[-1],
+        #                                        body=user_permission,))
+        #
+        # batch.execute()
 
     except HttpError as error:
         print(F'An error occurred: {error}')
