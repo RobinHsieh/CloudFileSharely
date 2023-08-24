@@ -87,6 +87,8 @@ def share_file(real_file_id, real_user, offset, max_date):
                                                body=user_permission,
                                                fields='id',))
 
+        batch.execute()
+
         user_permission = {'type': 'user',
                            'role': 'reader',
                            "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
