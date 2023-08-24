@@ -98,10 +98,8 @@ def share_file(real_file_id, real_user, offset, max_date):
                            }
 
         batch.add(service.permissions().update(fileId=file_id,
-                                               emailMessage=email_message,
                                                permissionId=ids[-1],
-                                               body=user_permission,
-                                               fields='id',))
+                                               body=user_permission,))
 
         batch.execute()
 
