@@ -89,6 +89,7 @@ def share_file(real_file_id, real_user, offset, max_date):
 
         batch.execute()
 
+
         batch = service.new_batch_http_request(callback=callback)
 
         user_permission = {'type': 'user',
