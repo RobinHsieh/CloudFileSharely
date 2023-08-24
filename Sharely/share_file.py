@@ -53,6 +53,7 @@ def share_file(real_file_id, real_user, offset, max_date):
 
         # See availability about setting an expiration date for file access in:
         # https://workspaceupdates.googleblog.com/2022/10/expiring-access-controls-google-drive.html
+        # https://stackoverflow.com/questions/75423531/google-service-account-drive-api-unable-to-set-expirationtime-python
         user_permission = {'type': 'user',
                            'role': 'reader',
                            "expirationTime": expire_date,
