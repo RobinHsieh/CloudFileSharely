@@ -10,7 +10,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
     # Authenticate with the Google Sheets API using the credentials
-    creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials/token.json', SCOPES)
+    creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json', SCOPES)
     sheets_service = build('sheets', 'v4', credentials=creds)
 
     # Get the sheet ID of the specified sheet name

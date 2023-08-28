@@ -15,7 +15,7 @@ for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
     )
 
 # Access csv files
-pandas.set_option("display.max_rows", 100, "display.max_columns", 20, )
+pandas.set_option("display.max_rows", 150, "display.max_columns", 20, )
 data_L6 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L6.csv", sep=",")
 data_L9 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L9.csv", sep=",")
 data_L14 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L14.csv", sep=",")

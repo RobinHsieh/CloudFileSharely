@@ -12,7 +12,7 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
 
 # 建立憑證
-credentials = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials/token.json',
+credentials = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json',
                                                     SCOPES)
 
 # 建立Google Sheets API客戶端
