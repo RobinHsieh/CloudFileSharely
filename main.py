@@ -3,10 +3,17 @@ import pandas
 from Sharely import update_cell_color as up_color
 # Files information
 from Sharely import files_information as f_i
+from datetime import datetime, timedelta
 
+
+# Get time
+current_date_utc8 = datetime.utcnow() + timedelta(hours=8)
+this_month = current_date_utc8.month
+today = current_date_utc8.day
+today_str = str(this_month) + "/" + str(today)
 
 print("Start----------------------------------------------------------------------------------------------------",
-      handle_csv.today_str)
+      today_str)
 
 # Update csv files
 for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
@@ -45,4 +52,4 @@ print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<|")
 handle_csv.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[10])
 
 print("~End~====================================================================================================",
-      handle_csv.today_str)
+      today_str)
