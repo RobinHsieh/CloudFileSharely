@@ -1,9 +1,16 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from Sharely import update_cell_color as up_color
 from Sharely import share_file
 
 
 def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):
+
+    # Get time
+    current_date_utc8 = datetime.utcnow() + timedelta(hours=8)
+    this_month = current_date_utc8.month
+    today = current_date_utc8.day
+    today_str = str(this_month) + "/" + str(today)
+
     # Processing required information
     row_size = data.shape[0]
     column_size = data.shape[1]
@@ -45,9 +52,3 @@ def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):
             for file_id in file_ids:
                 share_file.share_file(file_id, gmail, offset, max_date)
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-
-# Get time
-this_month = datetime.now().month
-today = datetime.now().day
-today_str = str(this_month) + "/" + str(today)
