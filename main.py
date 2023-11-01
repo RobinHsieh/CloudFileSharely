@@ -4,6 +4,7 @@ from Sharely import update_cell_color as up_color
 # Files information
 from Sharely import files_information as f_i
 from datetime import datetime, timedelta
+import time
 
 
 # Get time
@@ -45,10 +46,13 @@ up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L2
 
 # Send mail
 handle_csv.send_mail(data_L4, f_i.L4_video_id_dic, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[0])
+time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L06 is below")
 handle_csv.send_mail(data_L6, f_i.L6_video_id_dic, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
+time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L07 is below")
 handle_csv.send_mail(data_L7, f_i.L7_video_id_dic, f_i.spreadsheet_id_dic.get("L7.csv"), f_i.single_sheet_namelist[3])
+time.sleep(3)
 # print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L09 is below")
 # handle_csv.send_mail(data_L9, f_i.L9_video_id_dic, f_i.spreadsheet_id_dic.get("L9.csv"), f_i.single_sheet_namelist[4])
 # print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L11 is below")
@@ -57,6 +61,7 @@ handle_csv.send_mail(data_L7, f_i.L7_video_id_dic, f_i.spreadsheet_id_dic.get("L
 # handle_csv.send_mail(data_L14, f_i.L14_video_id_dic, f_i.spreadsheet_id_dic.get("L14.csv"), f_i.single_sheet_namelist[9])
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L01 is below")
 handle_csv.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[10])
+time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L02 is below")
 handle_csv.send_mail(data_L2, f_i.L2_video_id_dic, f_i.spreadsheet_id_dic.get("L2.csv"), f_i.single_sheet_namelist[11])
 
