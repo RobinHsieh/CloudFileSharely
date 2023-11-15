@@ -52,7 +52,7 @@ handle_csv.send_mail(data_L6, f_i.L6_video_id_dic, f_i.spreadsheet_id_dic.get("L
 time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L07 is below")
 handle_csv.send_mail(data_L7, f_i.L7_video_id_dic, f_i.spreadsheet_id_dic.get("L7.csv"), f_i.single_sheet_namelist[3])
-time.sleep(3)
+time.sleep(10)
 # print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L09 is below")
 # handle_csv.send_mail(data_L9, f_i.L9_video_id_dic, f_i.spreadsheet_id_dic.get("L9.csv"), f_i.single_sheet_namelist[4])
 # print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L11 is below")
