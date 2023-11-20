@@ -18,7 +18,7 @@ print("Start--------------------------------------------------------------------
 
 # Update csv files
 for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
-    if index in to_download:
+    if index in f_i.to_download:
         download_file.update_file(
             spreadsheet_name, f_i.spreadsheet_id_dic.get(spreadsheet_name), f_i.single_sheet_namelist[index]
         )
