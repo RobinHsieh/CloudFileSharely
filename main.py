@@ -18,13 +18,14 @@ print("Start--------------------------------------------------------------------
 
 # Update csv files
 for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
-    download_file.update_file(
-        spreadsheet_name, f_i.spreadsheet_id_dic.get(spreadsheet_name), f_i.single_sheet_namelist[index]
-    )
+    if index in to_download:
+        download_file.update_file(
+            spreadsheet_name, f_i.spreadsheet_id_dic.get(spreadsheet_name), f_i.single_sheet_namelist[index]
+        )
 
 # Access csv files
 pandas.set_option("display.max_rows", 150, "display.max_columns", 20, )
-data_L4 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L4.csv", sep=",")
+# data_L4 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L4.csv", sep=",")
 data_L6 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L6.csv", sep=",")
 data_L7 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L7.csv", sep=",")
 # data_L9 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L9.csv", sep=",")
@@ -34,7 +35,7 @@ data_L1 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L1.csv", 
 data_L2 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L2.csv", sep=",")
 
 # Update cells (fill color in sheet boundary)
-up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[0])
+# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[0])
 up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
 up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L7.csv"), f_i.single_sheet_namelist[3])
 # up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L9.csv"), f_i.single_sheet_namelist[4])
@@ -45,8 +46,8 @@ up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L2
 
 
 # Send mail
-handle_csv.send_mail(data_L4, f_i.L4_video_id_dic, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[0])
-time.sleep(3)
+# handle_csv.send_mail(data_L4, f_i.L4_video_id_dic, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[0])
+# time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L06 is below")
 handle_csv.send_mail(data_L6, f_i.L6_video_id_dic, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
 time.sleep(3)
