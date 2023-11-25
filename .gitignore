@@ -10,3 +10,4 @@ data/*
 !data/.gitkeep
 log/*
 !log/.gitkeep
+venv
