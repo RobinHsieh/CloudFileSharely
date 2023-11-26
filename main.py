@@ -65,10 +65,10 @@ handle_csv.send_mail(data_L8, f_i.L8_video_id_dic, f_i.spreadsheet_id_dic.get("L
 # print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L14 is below")
 # handle_csv.send_mail(data_L14, f_i.L14_video_id_dic, f_i.spreadsheet_id_dic.get("L14.csv"), f_i.single_sheet_namelist[9])
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L01 is below")
-handle_csv.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[10])
+handle_csv.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[11])
 time.sleep(3)
 print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L02 is below")
-handle_csv.send_mail(data_L2, f_i.L2_video_id_dic, f_i.spreadsheet_id_dic.get("L2.csv"), f_i.single_sheet_namelist[11])
+handle_csv.send_mail(data_L2, f_i.L2_video_id_dic, f_i.spreadsheet_id_dic.get("L2.csv"), f_i.single_sheet_namelist[12])
 
 print("~End~====================================================================================================",
       today_str)
