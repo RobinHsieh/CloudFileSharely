@@ -4,6 +4,7 @@ from googleapiclient import discovery
 from googleapiclient.errors import HttpError
 from Sharely import files_information as f_i
 
+
 # 設置API憑證
 SERVICE_ACCOUNT_FILE = f_i.project_path + '/token.json'
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -12,8 +13,9 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
 
 # 建立憑證
-credentials = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json',
-                                                    SCOPES)
+credentials = Credentials.from_authorized_user_file(
+    f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json',
+    SCOPES)
 
 # 建立Google Sheets API客戶端
 sheets_service = discovery.build('sheets', 'v4', credentials=credentials)
