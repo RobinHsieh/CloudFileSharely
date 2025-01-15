@@ -1,11 +1,11 @@
 import csv
-from google.oauth2.credentials import Credentials
+import os.path
+from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
-
 from Sharely import files_information as f_i
 
-SCOPES = ['https://www.googleapis.com/auth/drive']
 
+def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
 def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 

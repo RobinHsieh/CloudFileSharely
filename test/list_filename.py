@@ -2,14 +2,12 @@ from __future__ import print_function
 
 import os.path
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive']
+scopes = ['https://www.googleapis.com/auth/drive']
 
 
 def main():
@@ -39,7 +37,7 @@ def main():
 
         # Call the Drive v3 API
         results = service.files().list(
-            pageSize=100, fields="nextPageToken, files(id, name)").execute()
+            pageSize=10, fields="nextPageToken, files(id, name)").execute()
         items = results.get('files', [])
 
         if not items:

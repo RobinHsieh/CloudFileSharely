@@ -1,7 +1,5 @@
 from Sharely import download_file, handle_csv
-import pandas
 from Sharely import update_cell_color as up_color
-# Files information
 from Sharely import files_information as f_i
 from datetime import datetime, timedelta
 import time
@@ -16,7 +14,7 @@ today_str = str(this_month) + "/" + str(today)
 print("Start----------------------------------------------------------------------------------------------------",
       today_str)
 
-# Update csv files
+# Update local csv files
 for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
     if index in f_i.to_download:
         download_file.update_file(

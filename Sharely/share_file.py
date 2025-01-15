@@ -1,13 +1,14 @@
 from __future__ import print_function
+<<<<<<< HEAD
 
 from datetime import datetime, timedelta
+=======
+import os.path
+from datetime import datetime, timedelta
+from google.oauth2.service_account import Credentials
+>>>>>>> main
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from google.oauth2.credentials import Credentials
-
-import Sharely.files_information as f_i
-
-SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
 def share_file(real_file_id, real_user, offset, max_date):
@@ -28,7 +29,7 @@ def share_file(real_file_id, real_user, offset, max_date):
     creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json', SCOPES)
 
     try:
-        # create drive api client
+        # create drive API client
         service = build('drive', 'v3', credentials=creds)
         ids = []
         file_id = real_file_id
@@ -81,6 +82,20 @@ def share_file(real_file_id, real_user, offset, max_date):
                                                emailMessage=email_message,
                                                body=user_permission,
                                                fields='id',))
+
+        batch.execute()
+
+        # batch = service.new_batch_http_request(callback=callback)
+
+        user_permission = {'type': 'user',
+                           'role': 'reader',
+                           "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
+                           'emailAddress': real_user
+                           }
+
+        batch.add(service.permissions().update(fileId=file_id,
+                                               permissionId=ids[-1],
+                                               body=user_permission,))
 
         batch.execute()
 
