@@ -1,22 +1,13 @@
 .DS_Store
 Sharely/files_information.py
-<<<<<<< HEAD
 OAuth_client_ID_credentials_desktop/*
 !OAuth_client_ID_credentials_desktop/.gitkeep
 OAuth_client_ID_credentials_webapp/*
 !OAuth_client_ID_credentials_webapp/.gitkeep
-=======
-OAuth_client_ID_credentials/*
-!OAuth_client_ID_credentials/.gitkeep
->>>>>>> main
 Service_account_credentials/*
 !Service_account_credentials/.gitkeep
 data/*
 !data/.gitkeep
 log/*
-<<<<<<< HEAD
 !log/.gitkeep
 venv
-=======
-!log/.gitkeep
->>>>>>> main
