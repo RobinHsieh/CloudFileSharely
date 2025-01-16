@@ -3,15 +3,20 @@
 ### Project Structure
 ```
 PROJECT_ROOT
-├── data                        # Data
-├── Sharely                     # Project Package
-│   ├── download_file.py        # 
-│   ├── file_information.py     # 
-│   ├── share_file.py           # 
-│   ├── update_cell_color.py    # 
-│   └── handle_csv.py           # 
-├── log                         # STD output or Error output stream
-└── venv                        # pip vertial env
+|── OAuth_client_ID_credentials_desktop
+|   ├── credentials.json                 # Google OAuth2 credentials
+|   └── token.json                       # Google OAuth2 token
+├── data                                 # Data
+├── Sharely                              # Project Package
+│   ├── file_information.py              #
+│   ├── sheet_downloader.py              # 
+│   |
+│   ├── csv_task_processor.py            #
+│   ├── sheet_cell_color_manager.py      # 
+│   └── share_file.py                    # 
+|── main.py                              # Main entry
+├── log                                  # STD output, STD Error output stream
+└── venv                                 # pip vertial env
 ```
 
 
