@@ -1,0 +1,43 @@
+name: Auto Share File in Google Drive
+run-name: ${{ github.actor }} is sharing file by using crontab 🚀
+on:
+#  push
+#  schedule:
+#    - cron: '0 16 * * *'
+
+jobs:
+  Start-Daily-Actions:
+    runs-on: macos-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+
+      - name: Set up Python virtual environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.7'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.CREDENTIALS_JSON }}'
+          access_token_scopes: https://www.googleapis.com/auth/drive
+
+      - name: Get files_information.py
+        run: |
+          echo '${{ secrets.FILES_INFORMATION_PY }}' > ./Sharely/files_information.py
+
+      - name: Execute main.py
+        run: |
+          python3 ./main.py
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."

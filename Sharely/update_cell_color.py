@@ -1,6 +1,7 @@
-import datetime
-from google.oauth2.credentials import Credentials
-from googleapiclient import discovery
+from datetime import datetime
+
+from google.oauth2.service_account import Credentials
+from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from Sharely import files_information as f_i
 
@@ -19,10 +20,10 @@ credentials = Credentials.from_authorized_user_file(
 )
 
 # 建立Google Sheets API客戶端
-sheets_service = discovery.build('sheets', 'v4', credentials=credentials)
+sheets_service = build('sheets', 'v4', credentials=credentials)
 
 # 獲取今日日期
-today = datetime.datetime.now().strftime('%-m/%-d')
+today = datetime.now().strftime('%-m/%-d')
 
 
 # 獲取內部的Sheet ID
@@ -77,6 +78,7 @@ def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
     }
     try:
         sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")
 
@@ -86,6 +88,7 @@ def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color
+    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
     cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
 
     # Create a list of rows, each containing one cell value
@@ -101,6 +104,7 @@ def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
                         "sheetId": sheet_id,
                         "startRowIndex": row,
                         "endRowIndex": row + 150,
+                        "endRowIndex": row + 150,
                         "startColumnIndex": col,
                         "endColumnIndex": col + 1
                     }
@@ -109,6 +113,7 @@ def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
         ]
     }
     try:
+        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
         sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")
