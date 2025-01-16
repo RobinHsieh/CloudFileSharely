@@ -8,7 +8,7 @@ from Sharely import files_information as f_i
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
+def fetch_sheet_as_csv(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
     # Authenticate with the Google Sheets API using the credentials
     creds = Credentials.from_authorized_user_file(

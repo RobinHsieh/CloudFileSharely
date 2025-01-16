@@ -84,7 +84,7 @@ def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
 
 
 # 更新Google Sheet單元格顏色(update boundary color)
-def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+def update_bulk_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color

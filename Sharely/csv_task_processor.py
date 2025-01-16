@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from Sharely import update_cell_color as up_color
+from Sharely import sheet_cell_color_manager as cell_manager
 from Sharely import share_file
 
 
@@ -15,7 +15,7 @@ def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):
     row_size = data.shape[0]
     column_size = data.shape[1]
 
-    # Start to send email
+    # Start to send email row by row
     for row in range(row_size):
         # Person's mail
         gmail = data.at[row, "電子郵件地址"]
@@ -28,23 +28,23 @@ def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):
             if date == today_str:
                 if file_ids_dic.get(column):
 
-                    red, green, blue = up_color.get_cell_color(row + 1, column, spreadsheet_id)
+                    red, green, blue = cell_manager.get_cell_color(row + 1, column, spreadsheet_id)
 
                     if (red, green, blue) == (1, 1, 1) or (red, green, blue) == (0, 0, 0):  # if cell's color is white
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 1, 1, 0, spreadsheet_id, sheet_name)  # yellow
+                        cell_manager.update_cell_color(row + 1, column, 1, 1, 0, spreadsheet_id, sheet_name)  # yellow
 
                     elif (red, green, blue) == (1, 1, 0):  # if cell's color is yellow
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 0, 1, 0, spreadsheet_id, sheet_name)  # green
+                        cell_manager.update_cell_color(row + 1, column, 0, 1, 0, spreadsheet_id, sheet_name)  # green
 
                     elif (red, green, blue) == (0, 1, 0):  # if cell's color is green
                         max_date = max_date + data.columns[column] + " "
                         file_ids.append(file_ids_dic.get(column))
                         offset += 2
-                        up_color.update_cell_color(row + 1, column, 0, 1, 1, spreadsheet_id, sheet_name)  # blue
+                        cell_manager.update_cell_color(row + 1, column, 0, 1, 1, spreadsheet_id, sheet_name)  # blue
 
         if offset != -2:
             print(row, gmail)
