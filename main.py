@@ -1,10 +1,11 @@
-from Sharely import download_file, handle_csv
 import pandas
-from Sharely import update_cell_color as up_color
-# Files information
-from Sharely import files_information as f_i
-from datetime import datetime, timedelta
 import time
+from datetime import datetime, timedelta
+
+# Files information
+from Sharely import download_file, handle_csv
+from Sharely import update_cell_color as up_color
+from Sharely import files_information as f_i
 
 
 # Get time

@@ -56,11 +56,12 @@ def share_file(real_file_id, real_user, offset, max_date):
         # See availability about setting an expiration date for file access in:
         # https://workspaceupdates.googleblog.com/2022/10/expiring-access-controls-google-drive.html
         # https://stackoverflow.com/questions/75423531/google-service-account-drive-api-unable-to-set-expirationtime-python
-        user_permission = {'type': 'user',
-                           'role': 'reader',
-                           "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
-                           'emailAddress': real_user
-                           }
+        user_permission = {
+            'type': 'user',
+            'role': 'reader',
+            "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
+            'emailAddress': real_user
+        }
 
         email_message = f"觀看時間至{expire_date_utc8.month}月{expire_date_utc8.day}日 23:59 UTC+8\n\n【智慧財產權】\
         \n請本人在觀看雲端影片時，嚴禁下載、翻錄雲端影片內容，或是提供給第三人做使用。\n\n【貼心提醒】\n若覺得不清楚的話，\
@@ -78,10 +79,12 @@ def share_file(real_file_id, real_user, offset, max_date):
 
         # See method details in:
         # https://developers.google.com/resources/api-libraries/documentation/drive/v3/python/latest/drive_v3.permissions.html
-        batch.add(service.permissions().create(fileId=file_id,
-                                               emailMessage=email_message,
-                                               body=user_permission,
-                                               fields='id',))
+        batch.add(service.permissions().create(
+            fileId=file_id,
+            emailMessage=email_message,
+            body=user_permission,
+            fields='id',
+        ))
 
         batch.execute()
 

@@ -15,7 +15,8 @@ RANGE_NAME = 'A1:Z150'  # 例如：'Sheet1'
 # 建立憑證
 credentials = Credentials.from_authorized_user_file(
     f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json',
-    SCOPES)
+    SCOPES
+)
 
 # 建立Google Sheets API客戶端
 sheets_service = discovery.build('sheets', 'v4', credentials=credentials)
@@ -26,8 +27,11 @@ today = datetime.datetime.now().strftime('%-m/%-d')
 
 # 獲取內部的Sheet ID
 def get_sheet_id(sheet_name, spreadsheet_id):
-    sheets_metadata = sheets_service.spreadsheets().get(spreadsheetId=spreadsheet_id,
-                                                        fields='sheets(properties)').execute()
+    sheets_metadata = sheets_service.spreadsheets().get(
+        spreadsheetId=spreadsheet_id,
+        fields='sheets(properties)'
+    ).execute()
+
     sheets = sheets_metadata.get('sheets', '')
     sheet_id = None
     for sheet in sheets:
@@ -112,18 +116,21 @@ def update_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
 
 # 讀取單元格顏色
 def get_cell_color(row, col, spreadsheet_id):
-    request = sheets_service.spreadsheets().get(spreadsheetId=spreadsheet_id, ranges=RANGE_NAME,
-                                                fields='sheets('
-                                                       'data('
-                                                       'rowData('
-                                                       'values('
-                                                       'userEnteredFormat('
-                                                       'backgroundColor'
-                                                       ')'
-                                                       ')'
-                                                       ')'
-                                                       ')'
-                                                       ')')
+    request = sheets_service.spreadsheets().get(
+        spreadsheetId=spreadsheet_id, ranges=RANGE_NAME,
+        fields=
+        'sheets('
+            'data('
+                'rowData('
+                    'values('
+                        'userEnteredFormat('
+                            'backgroundColor'
+                        ')'
+                    ')'
+                ')'
+            ')'
+        ')'
+    )
     result = request.execute()
 
     sheet_data = result['sheets'][0]['data'][0]['rowData'][row]['values'][col]

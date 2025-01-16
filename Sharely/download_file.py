@@ -11,7 +11,10 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
     # Authenticate with the Google Sheets API using the credentials
-    creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json', SCOPES)
+    creds = Credentials.from_authorized_user_file(
+        f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json',
+        SCOPES
+    )
     sheets_service = build('sheets', 'v4', credentials=creds)
 
     # Get the sheet ID of the specified sheet name
@@ -32,7 +35,10 @@ def update_file(spreadsheet_name, spreadsheet_id, single_sheet_name):
 
     # Get the data from the specified sheet
     range_name = single_sheet_name
-    result = sheets_service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+    result = sheets_service.spreadsheets()\
+        .values()\
+        .get(spreadsheetId=spreadsheet_id, range=range_name)\
+        .execute()
     rows = result.get('values', [])
 
     # Write the data to a CSV file
