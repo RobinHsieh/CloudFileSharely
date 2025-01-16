@@ -3,7 +3,7 @@ import csv
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-from Sharely import files_information as f_i
+from src import files_information as f_i
 
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -18,21 +18,32 @@ def fetch_sheet_as_csv(spreadsheet_name, spreadsheet_id, single_sheet_name):
     )
     sheets_service = build('sheets', 'v4', credentials=creds)
 
-    # Get the sheet ID of the specified sheet name
-    sheets_metadata = sheets_service\
-        .spreadsheets()\
-        .get(spreadsheetId=spreadsheet_id, ranges=[], includeGridData=False)\
-        .execute()
-    sheets = sheets_metadata['sheets']
+    # """
+    # Spreadsheet: The primary object in Google Sheets. It can contain multiple Sheets
+    # Sheet: A single tab within a Spreadsheet
 
-    sheet_id = None
-    for sheet in sheets:
-        if sheet['properties']['title'] == single_sheet_name:
-            sheet_id = sheet['properties']['sheetId']
-            break
+    # input: spreadsheet_id, single_sheet_name
+    # output: sheet_id
+    # """
+    # sheets_metadata = sheets_service\
+    #     .spreadsheets()\
+    #     .get(spreadsheetId=spreadsheet_id, ranges=[], includeGridData=False)\
+    #     .execute()
+    # sheets = sheets_metadata['sheets']
 
-    if sheet_id is None:
-        raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(single_sheet_name))
+    # sheet_id = None
+    # for sheet in sheets:
+    #     if sheet['properties']['title'] == single_sheet_name:
+    #         sheet_id = sheet['properties']['sheetId']
+    #         break
+
+    # if sheet_id is None:
+    #     raise ValueError("Sheet with name '{}' not found in the spreadsheet.".format(single_sheet_name))
+
+
+    """
+    Guides: https://developers.google.com/sheets/api/guides/values?hl=zh-tw#python
+    """
 
     # Get the data from the specified sheet
     range_name = single_sheet_name

@@ -4,7 +4,7 @@ from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from Sharely import files_information as f_i
+from src import files_information as f_i
 
 
 # 設置API憑證
@@ -79,7 +79,6 @@ def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
     }
     try:
         sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
-        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")
 
@@ -89,7 +88,6 @@ def update_bulk_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_na
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color
-    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
     cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
 
     # Create a list of rows, each containing one cell value
@@ -114,7 +112,6 @@ def update_bulk_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_na
         ]
     }
     try:
-        sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
         sheets_service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     except HttpError as error:
         print(f"An error occurred: {error}")

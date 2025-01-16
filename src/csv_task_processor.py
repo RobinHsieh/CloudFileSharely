@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
-from Sharely import sheet_cell_color_manager as cell_manager
-from Sharely import share_file
+from src import sheet_cell_color_manager as cell_manager
+from src import share_file
 
 
 def send_mail(data, file_ids_dic, spreadsheet_id, sheet_name):

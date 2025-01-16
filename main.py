@@ -3,9 +3,9 @@ import time
 from datetime import datetime, timedelta
 
 # Files information
-from Sharely import csv_task_processor, sheet_downloader
-from Sharely import sheet_cell_color_manager as cell_manager
-from Sharely import files_information as f_i
+from src import csv_task_processor, sheet_downloader
+from src import sheet_cell_color_manager as cell_manager
+from src import files_information as f_i
 
 
 # Get time
@@ -21,7 +21,9 @@ print("Start--------------------------------------------------------------------
 for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
     if index in f_i.to_download:
         sheet_downloader.fetch_sheet_as_csv(
-            spreadsheet_name, f_i.spreadsheet_id_dic.get(spreadsheet_name), f_i.single_sheet_namelist[index]
+            spreadsheet_name, 
+            f_i.spreadsheet_id_dic.get(spreadsheet_name), 
+            f_i.single_sheet_namelist[index]
         )
 
 # Access csv files

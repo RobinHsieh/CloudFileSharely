@@ -2,7 +2,7 @@ import math
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-from Sharely import files_information as f_i
+from src import files_information as f_i
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
