@@ -42,4 +42,4 @@ def update_file(file_name, sheet_id):
             outfile.write(chunk)
 
 
-update_file("L4.csv", f_i.spreadsheet_id_dic.get("L4.csv"))
+update_file("L4.csv", f_i.spreadsheet_id_dict.get("L4.csv"))

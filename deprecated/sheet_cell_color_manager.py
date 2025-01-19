@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from google.oauth2.service_account import Credentials
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -29,6 +29,16 @@ today = datetime.now().strftime('%-m/%-d')
 
 # 獲取內部的Sheet ID
 def get_sheet_id(sheet_name, spreadsheet_id):
+    """
+    Spreadsheet: The primary object in Google Sheets. It can contain multiple Sheets
+    Sheet: A single tab within a Spreadsheet
+
+    Args:
+        sheet_name (str): The name of the sheet.
+        spreadsheet_id (str): The ID of the spreadsheet.
+    Returns:
+        int: The ID of the specified
+    """
     sheets_metadata = sheets_service.spreadsheets().get(
         spreadsheetId=spreadsheet_id,
         fields='sheets(properties)'
@@ -44,7 +54,7 @@ def get_sheet_id(sheet_name, spreadsheet_id):
 
 
 # 更新Google Sheet單元格顏色
-def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+def write_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
     body = {
         "requests": [
@@ -84,28 +94,50 @@ def update_cell_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
 
 
 # 更新Google Sheet單元格顏色(update boundary color)
-def update_bulk_cells_color(row, col, red, green, blue, spreadsheet_id, sheet_name):
+def write_bulk_cells_color(row, column, row_range, red, green, blue, spreadsheet_id, sheet_name):
+    """
+    Guides: https://developers.google.com/sheets/api/guides/values?hl=zh-tw#python
+    Args:
+        row (int): The starting row index.
+        col (int): The starting column index.
+        row_range (int): The number of cells in a row to update.
+        red (float): The red component of the color interval [0, 1].
+        green (float): The green component of the color interval [0, 1].
+        blue (float): The blue component of the color interval [0, 1].
+        spreadsheet_id (str): The ID of the spreadsheet.
+        sheet_name (str): The name of the sheet.
+    """
     sheet_id = get_sheet_id(sheet_name, spreadsheet_id)
 
     # Prepare a list of cell values with the desired background color
-    cell_values = [{"userEnteredFormat": {"backgroundColor": {"red": red, "green": green, "blue": blue}}}] * 150
+    cell_values = [
+        {
+            "userEnteredFormat": {
+                "backgroundColor": {
+                    "red": red, 
+                    "green": green, 
+                    "blue": blue
+                }
+            }
+        }
+    ] * row_range
 
-    # Create a list of rows, each containing one cell value
-    rows = [{"values": cell_value} for cell_value in cell_values]
+    # Create list containing each cells value in a row
+    row_list = [{"values": cell_value} for cell_value in cell_values]
 
     body = {
         "requests": [
             {
                 "updateCells": {
-                    "rows": rows,
+                    "rows": row_list,
                     "fields": "userEnteredFormat.backgroundColor",
                     "range": {
                         "sheetId": sheet_id,
                         "startRowIndex": row,
-                        "endRowIndex": row + 150,
-                        "endRowIndex": row + 150,
-                        "startColumnIndex": col,
-                        "endColumnIndex": col + 1
+                        "endRowIndex": row + row_range,
+                        "endRowIndex": row + row_range,
+                        "startColumnIndex": column,
+                        "endColumnIndex": column + 1
                     }
                 }
             }

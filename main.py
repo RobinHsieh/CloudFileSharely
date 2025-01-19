@@ -1,15 +1,15 @@
-import pandas
-import time
-from datetime import datetime, timedelta
+import pandas as pd
+from datetime import datetime, timedelta, timezone
 
-# Files information
-from src import csv_task_processor, sheet_downloader
-from src import sheet_cell_color_manager as cell_manager
+from src.interfaces import google_drive_client as drive_client
+from src.interfaces import google_sheet_client as sheet_client
+from src.controllers import cell_properties_manager as cell_manager
+from src.controllers import csv_task_processor as csv_processor
 from src import files_information as f_i
 
 
 # Get time
-current_date_utc8 = datetime.utcnow() + timedelta(hours=8)
+current_date_utc8 = datetime.now(timezone.utc) + timedelta(hours=8)
 this_month = current_date_utc8.month
 today = current_date_utc8.day
 today_str = str(this_month) + "/" + str(today)
@@ -17,94 +17,41 @@ today_str = str(this_month) + "/" + str(today)
 print("Start----------------------------------------------------------------------------------------------------",
       today_str)
 
-# Update csv files
-for index, spreadsheet_name in enumerate(f_i.spreadsheet_id_dic):
-    if index in f_i.to_download:
-        sheet_downloader.fetch_sheet_as_csv(
-            spreadsheet_name, 
-            f_i.spreadsheet_id_dic.get(spreadsheet_name), 
-            f_i.single_sheet_namelist[index]
-        )
+# L0_sheet_client = sheet_client.GoogleSheetClient(f_i.spreadsheet_id_dict.get("L0.csv"), f_i.sheet_name_list[0], f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json')
+# L1_sheet_client = sheet_client.GoogleSheetClient(f_i.spreadsheet_id_dict.get("L1.csv"), f_i.sheet_name_list[1], f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json')
+L2_sheet_client = sheet_client.GoogleSheetClient(f_i.spreadsheet_id_dict.get("L2.csv"), f_i.sheet_name_list[2], f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json')
+# L6_sheet_client = sheet_client.GoogleSheetClient(f_i.spreadsheet_id_dict.get("L6.csv"), f_i.sheet_name_list[3], f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json')
 
-# Access csv files
-pandas.set_option("display.max_rows", 150, "display.max_columns", 20, )
-# 週三班
-# data_L7 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L7.csv", sep=",")
-# data_L8 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L8.csv", sep=",")
-# data_L9 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L9.csv", sep=",")
-# data_L10 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L10.csv", sep=",")
-# data_L11 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L11.csv", sep=",")
-data_L0 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L0.csv", sep=",")
-data_L1 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L1.csv", sep=",")
+# L0_sheet_client.get_sheet_as_csv("L0.csv", f_i.project_path + "/data/")
+# L1_sheet_client.get_sheet_as_csv("L1.csv", f_i.project_path + "/data/")
+L2_sheet_client.get_sheet_as_csv("L2.csv", f_i.project_path + "/data/")
+# L6_sheet_client.get_sheet_as_csv("L6.csv", f_i.project_path + "/data/")
 
-# 週一班
-# data_L11 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L11.csv", sep=",")
+# data_L0 = pd.read_csv(filepath_or_buffer=f_i.project_path + "/data/L0.csv", sep=",")
+# data_L1 = pd.read_csv(filepath_or_buffer=f_i.project_path + "/data/L1.csv", sep=",")
+data_L2 = pd.read_csv(filepath_or_buffer=f_i.project_path + "/data/L2.csv", sep=",", skip_blank_lines=False) # Debugging
+# data_L6 = pd.read_csv(filepath_or_buffer=f_i.project_path + "/data/L6.csv", sep=",")
 
-# 週二班
-# data_L14 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L14.csv", sep=",")
-# data_L1 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L1.csv", sep=",")
-# data_L2 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L2.csv", sep=",")
-# data_L3 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L3.csv", sep=",")
-# data_L4 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L4.csv", sep=",")
-# data_L5 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L5.csv", sep=",")
-data_L6 = pandas.read_csv(filepath_or_buffer=f_i.project_path + "/data/L6.csv", sep=",")
+# L0_sheet_client.append_write_cell_color_request(0, 23, data_L0.shape[0], 0.8, 0.8, 0.8)
+# L1_sheet_client.append_write_cell_color_request(0, 23, data_L1.shape[0], 0.8, 0.8, 0.8)
+# print(data_L2.shape[0]) # Debugging
+L2_sheet_client.append_write_cell_color_request(0, 23, data_L2.shape[0]+1, 0.8, 0.8, 0.8)
+L2_sheet_client.execute_write_cell_color_requests()
+# L6_sheet_client.append_write_cell_color_request(0, 23, data_L6.shape[0], 0.8, 0.8, 0.8)
 
+Drive_client = drive_client.GoogleDriveClient(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json')
 
-# Update cells (fill color in sheet boundary)
-# 週三班
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L8.csv"), f_i.single_sheet_namelist[0])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L9.csv"), f_i.single_sheet_namelist[0])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L10.csv"), f_i.single_sheet_namelist[1])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L11.csv"), f_i.single_sheet_namelist[0])
-cell_manager.update_bulk_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L0.csv"), f_i.single_sheet_namelist[0])
-cell_manager.update_bulk_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[1])
+# L0_csv_processor = csv_processor.CSVTaskProcessor(data_L0, f_i.L0_video_id_dict, Drive_client, L0_sheet_client)
+# L1_csv_processor = csv_processor.CSVTaskProcessor(data_L1, f_i.L1_video_id_dict, Drive_client, L1_sheet_client)
+print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L2 is below")
+L2_csv_processor = csv_processor.CSVTaskProcessor(data_L2, f_i.L2_video_id_dict, Drive_client, L2_sheet_client)
+# L6_csv_processor = csv_processor.CSVTaskProcessor(data_L6, f_i.L6_video_id_dict, Drive_client, L6_sheet_client)
 
-# 週一班
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L11.csv"), f_i.single_sheet_namelist[])
-
-# 週二班
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L14.csv"), f_i.single_sheet_namelist[])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L2.csv"), f_i.single_sheet_namelist[4])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L3.csv"), f_i.single_sheet_namelist[3])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[2])
-# up_color.update_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L5.csv"), f_i.single_sheet_namelist[3])
-cell_manager.update_bulk_cells_color(0, 23, 0.8, 0.8, 0.8, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
+# L0_csv_processor.send_email_notifications()
+# L1_csv_processor.send_email_notifications()
+L2_csv_processor.send_email_notifications()
+# L6_csv_processor.send_email_notifications()
 
 
-# Send mail
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L06 is below")
-# handle_csv.send_mail(data_L6, f_i.L6_video_id_dic, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
-# time.sleep(3)
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L08 is below")
-# handle_csv.send_mail(data_L8, f_i.L8_video_id_dic, f_i.spreadsheet_id_dic.get("L8.csv"), f_i.single_sheet_namelist[0])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L09 is below")
-# handle_csv.send_mail(data_L9, f_i.L9_video_id_dic, f_i.spreadsheet_id_dic.get("L9.csv"), f_i.single_sheet_namelist[0])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L10 is below")
-# handle_csv.send_mail(data_L10, f_i.L10_video_id_dic, f_i.spreadsheet_id_dic.get("L10.csv"), f_i.single_sheet_namelist[1])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L11 is below")
-# handle_csv.send_mail(data_L11, f_i.L11_video_id_dic, f_i.spreadsheet_id_dic.get("L11.csv"), f_i.single_sheet_namelist[0])
-print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L00 is below")
-csv_task_processor.send_mail(data_L0, f_i.L0_video_id_dic, f_i.spreadsheet_id_dic.get("L0.csv"), f_i.single_sheet_namelist[0])
-print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L01 is below")
-csv_task_processor.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[1])
-
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L14 is below")
-# handle_csv.send_mail(data_L14, f_i.L14_video_id_dic, f_i.spreadsheet_id_dic.get("L14.csv"), f_i.single_sheet_namelist[])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L01 is below")
-# handle_csv.send_mail(data_L1, f_i.L1_video_id_dic, f_i.spreadsheet_id_dic.get("L1.csv"), f_i.single_sheet_namelist[])
-time.sleep(5)
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L02 is below")
-# handle_csv.send_mail(data_L2, f_i.L2_video_id_dic, f_i.spreadsheet_id_dic.get("L2.csv"), f_i.single_sheet_namelist[4])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L03 is below")
-# handle_csv.send_mail(data_L3, f_i.L3_video_id_dic, f_i.spreadsheet_id_dic.get("L3.csv"), f_i.single_sheet_namelist[3])
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L04 is below")
-# handle_csv.send_mail(data_L4, f_i.L4_video_id_dic, f_i.spreadsheet_id_dic.get("L4.csv"), f_i.single_sheet_namelist[2])
-# time.sleep(5)
-# print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L05 is below")
-# handle_csv.send_mail(data_L5, f_i.L5_video_id_dic, f_i.spreadsheet_id_dic.get("L5.csv"), f_i.single_sheet_namelist[3])
-print("@.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o< @.@ *_* >o<| L06 is below")
-csv_task_processor.send_mail(data_L6, f_i.L6_video_id_dic, f_i.spreadsheet_id_dic.get("L6.csv"), f_i.single_sheet_namelist[2])
-
-print("~End~====================================================================================================",
+print("End------------------------------------------------------------------------------------------------------",
       today_str)

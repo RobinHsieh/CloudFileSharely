@@ -11,28 +11,27 @@ import src.files_information as f_i
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def share_file(real_file_id, real_user, offset, max_date):
+def share_file(file_id, user, offset, view_limit_near_dates):
     """Batch permission modification.
     Args:
-        real_file_id: file Id
-        real_user: User ID
-        # real_domain: Domain of the user ID
+        file_id: file Id
+        user: User ID
         offset: How long is it from tomorrow to the day in the future
-        max_date: The date when the maximum number of applications was reached
+        view_limit_near_dates: The date that view limit reached
     Prints modified permissions
 
     Load pre-authorized user credentials from the environment.
     TODO(developer) - See https://developers.google.com/identity
     for guides on implementing OAuth2 for the application.
     """
-    # creds, _ = google.auth.default()
+    
     creds = Credentials.from_authorized_user_file(f_i.project_path + '/OAuth_client_ID_credentials_desktop/token.json', SCOPES)
 
     try:
         # create drive api client
         service = build('drive', 'v3', credentials=creds)
         ids = []
-        file_id = real_file_id
+        file_id = file_id
 
         def callback(request_id, response, exception):
             if exception:
@@ -45,11 +44,9 @@ def share_file(real_file_id, real_user, offset, max_date):
 
         # pylint: disable=maybe-no-member
 
-        if offset == -2:
-            offset = 0
 
         current_date_utc8 = datetime.utcnow() + timedelta(hours=8)
-        expire_date_utc8 = current_date_utc8 + timedelta(days=1 + offset)
+        expire_date_utc8 = current_date_utc8 + timedelta(days=offset)
 
         batch = service.new_batch_http_request(callback=callback)
 
@@ -60,7 +57,7 @@ def share_file(real_file_id, real_user, offset, max_date):
             'type': 'user',
             'role': 'reader',
             "expirationTime": f"{expire_date_utc8.strftime('%Y-%m-%d')}T23:59:59+08:00:00",
-            'emailAddress': real_user
+            'emailAddress': user
         }
 
         email_message = f"觀看時間至{expire_date_utc8.month}月{expire_date_utc8.day}日 23:59 UTC+8\n\n【智慧財產權】\
@@ -68,9 +65,9 @@ def share_file(real_file_id, real_user, offset, max_date):
         建議改用筆電或電腦(螢幕較大之設備)觀看，並且把畫質調成1080p(點選「設置」→「畫質」→「1080p」，若無自動調整請重複操作一次)，會比較清楚。\
         \n\n【問題排除】\n如遇播放影片時發生問題，請改用「無痕模式」(或「私密瀏覽」...等)試試看，如仍無法觀看請與助教聯繫。"
 
-        if max_date != " ":
+        if view_limit_near_dates != " ":
             email_message += f"\n-----------------------------------------------------------------------\n\
-            提醒您：\n由於下列課程：{max_date}的申請次數已達3次，因此上述課程系統將不再自動開放，\
+            提醒您：\n由於下列課程：{view_limit_near_dates}的申請次數已達3次，因此上述課程系統將不再自動開放，\
             若因個人原因尚有觀看需求，歡迎與助教聯絡。\n\
             -----------------------------------------------------------------------"
 

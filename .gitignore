@@ -1,5 +1,5 @@
 .DS_Store
-Sharely/files_information.py
+src/files_information.py
 OAuth_client_ID_credentials_desktop/*
 !OAuth_client_ID_credentials_desktop/.gitkeep
 OAuth_client_ID_credentials_webapp/*
@@ -10,4 +10,9 @@ data/*
 !data/.gitkeep
 log/*
 !log/.gitkeep
+
 venv
+
+src/__pycache__/*.pyc
+src/interfaces/__pycache__/*.pyc
+src/controllers/__pycache__/*.pyc
